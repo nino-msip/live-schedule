@@ -49,7 +49,8 @@
       align-items: center;
       gap: 12px;
       flex-wrap: wrap;
-      margin-bottom: 36px;
+      margin-top: 40px;
+      margin-bottom: 8px;
       padding-top: 4px;
     }
     .stream-label {
@@ -215,9 +216,10 @@
 
     /* ── Bandsintown CTA ── */
     .bit-cta {
-      margin-top: 48px;
-      background: #fff;
-      border: 1px solid var(--paper-line);
+      margin-top: 0;
+      margin-bottom: 40px;
+      background: linear-gradient(160deg, #dff3ff 0%, #eef8ff 50%, #fff 100%);
+      border: 1px solid #b8e0f7;
       padding: 32px 24px 28px;
       display: flex;
       flex-direction: column;
@@ -325,17 +327,6 @@
       Live Schedule
     </h1>
 
-    <div class="stream-bar">
-      <span class="stream-label">Listen on</span>
-      <a class="stream-tab spotify" href="https://open.spotify.com/artist/0cascybzS2QQL1m3h57tcY" target="_blank" rel="noopener">Spotify</a>
-      <a class="stream-tab apple" href="https://music.apple.com/jp/artist/moritasaki-in-the-pool/1636167632" target="_blank" rel="noopener">Apple Music</a>
-      <a class="stream-tab youtube" href="https://www.youtube.com/@moritasakiinthepool1739" target="_blank" rel="noopener">YouTube</a>
-    </div>
-
-    <div id="live-list">
-      <p class="loading">Loading...</p>
-    </div>
-
     <div class="bit-cta" id="bit-cta">
       <span class="bit-cta-logo">Bandsintown</span>
       <img class="bit-cta-img" src="https://photos.bandsintown.com/large/26186122.jpeg" alt="MoritaSaki in the pool" />
@@ -351,6 +342,17 @@
         ♡ Follow
       </a>
       <p class="bit-cta-sub">Bandsintownでフォローしてライブ情報をいち早くゲット</p>
+    </div>
+
+    <div id="live-list">
+      <p class="loading">Loading...</p>
+    </div>
+
+    <div class="stream-bar">
+      <span class="stream-label">Listen on</span>
+      <a class="stream-tab spotify" href="https://open.spotify.com/artist/0cascybzS2QQL1m3h57tcY" target="_blank" rel="noopener">Spotify</a>
+      <a class="stream-tab apple" href="https://music.apple.com/jp/artist/moritasaki-in-the-pool/1636167632" target="_blank" rel="noopener">Apple Music</a>
+      <a class="stream-tab youtube" href="https://www.youtube.com/@moritasakiinthepool1739" target="_blank" rel="noopener">YouTube</a>
     </div>
   </main>
 
