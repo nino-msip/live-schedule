@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Schedule — MoritaSaki in the pool</title>
+  <meta property="og:title" content="Live Schedule — MoritaSaki in the pool" />
+  <meta property="og:description" content="MoritaSaki in the pool のライブスケジュール" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/nino-msip/moritasaki-in-the-pool/main/icons/ogp.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #e62429;
+      --black: #0d0d0d;
+      --paper: #fff3b8;
+      --paper-line: #e9d98f;
+      --ink-dim: #5c5c5c;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--paper);
+      color: var(--black);
+      font-family: 'Roboto', 'Noto Sans JP', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100svh;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 3px solid var(--red);
+      padding: 18px 24px 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--paper);
+    }
+    header img {
+      height: 28px;
+      width: auto;
+    }
+    header .header-label {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      padding: 4px 10px;
+      border: 1.5px solid var(--red);
+    }
+
+    /* ── Main ── */
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    h1 {
+      font-family: 'Anton', 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      font-size: clamp(28px, 6vw, 48px);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 32px;
+    }
+    h1 span {
+      display: block;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+
+    /* ── Show Grid ── */
+    .show-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: clamp(16px, 3vw, 28px);
+    }
+
+    .show-card { display: flex; flex-direction: column; }
+
+    .show-plate {
+      background: #fff;
+      color: var(--black);
+      aspect-ratio: 4 / 3;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--paper-line);
+      text-decoration: none;
+      transition: transform 0.15s ease;
+    }
+    a.show-plate:hover { transform: translateY(-3px); }
+    .show-plate::after {
+      content: "";
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 5px;
+      background: var(--red);
+    }
+    .show-plate.has-flyer { padding: 0; }
+    .show-flyer-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .show-plate-scrim {
+      position: relative;
+      z-index: 1;
+      padding: 14px 16px 18px;
+      background: linear-gradient(to top, rgba(13,13,13,0.88), rgba(13,13,13,0));
+    }
+    .show-plate-title {
+      font-family: 'Anton', 'Noto Sans JP', sans-serif;
+      font-weight: 400;
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.2;
+    }
+    .show-plate.has-flyer .show-plate-title { color: #fff; }
+
+    .show-meta {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .show-date {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--red);
+    }
+    .show-venue { font-size: 13px; color: var(--black); }
+    .show-city  { color: var(--ink-dim); }
+    .show-performers {
+      font-size: 12px;
+      color: var(--ink-dim);
+      margin-top: 2px;
+    }
+
+    .show-tickets {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .ticket-pill {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--black);
+      border: 1px solid var(--paper-line);
+      padding: 6px 14px;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .ticket-pill:hover { border-color: var(--red); color: var(--red); }
+    .show-tba { font-size: 12px; color: #999; }
+
+    /* ── States ── */
+    .loading, .empty, .error {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      color: var(--ink-dim);
+      padding: 48px 0;
+      text-align: center;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 32px 20px;
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--ink-dim);
+      border-top: 1px solid var(--paper-line);
+    }
+    footer a { color: var(--red); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://raw.githubusercontent.com/nino-msip/moritasaki-in-the-pool/main/logo.avif" alt="MoritaSaki in the pool" />
+    <span class="header-label">Live Schedule</span>
+  </header>
+
+  <main>
+    <h1>
+      <span>MoritaSaki in the pool</span>
+      Live Schedule
+    </h1>
+
+    <div id="live-list">
+      <p class="loading">Loading...</p>
+    </div>
+  </main>
+
+  <footer>
+    &copy; MoritaSaki in the pool &nbsp;·&nbsp;
+    <a href="https://www.bandsintown.com/a/15665430" target="_blank" rel="noopener">Bandsintown</a>
+  </footer>
+
+<script>
+  const BIT_APP_ID = '59eb73f72056941927ca5a752b0891de';
+  const BIT_ARTIST = 'MoritaSaki in the pool';
+  const FLYER_BASE = 'https://raw.githubusercontent.com/nino-msip/moritasaki-in-the-pool/main/flyers/';
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  window.__flyerFallback = function(img) {
+    const exts = (img.dataset.exts || '').split(',').filter(Boolean);
+    if (exts.length) {
+      img.src = img.dataset.base + '.' + exts.shift();
+      img.dataset.exts = exts.join(',');
+    } else {
+      img.closest('.show-plate')?.classList.remove('has-flyer');
+      img.remove();
+    }
+  };
+
+  function formatDate(s) {
+    if (!s) return '';
+    const d = new Date(s);
+    if (isNaN(d)) return '';
+    const wd = ['日','月','火','水','木','金','土'][d.getDay()];
+    return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}（${wd}）`;
+  }
+
+  function flyerDate(s) {
+    if (!s) return null;
+    const d = new Date(s);
+    if (isNaN(d)) return null;
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  }
+
+  function vendorLabel(name) {
+    if (!name) return 'Ticket';
+    const n = name.toLowerCase();
+    if (n.includes('livepocket')) return 'LivePocket';
+    if (n.includes('zaiko'))     return 'Zaiko';
+    if (n.includes('eplus'))     return 'e+';
+    if (n.includes('tiget'))     return 'Tiget';
+    if (n.includes('tixplus'))   return 'TixPlus';
+    if (n.includes('peatix'))    return 'Peatix';
+    return 'Ticket';
+  }
+
+  function renderEvent(e) {
+    const dateStr = e.starts_at || e.datetime || '';
+    const date    = esc(formatDate(dateStr));
+    const fd      = flyerDate(dateStr);
+    const title   = esc(e.title || '');
+    const city    = esc(e.venue?.city || e.venue?.location || '');
+    const performers = (e.lineup || [])
+      .filter(n => n !== BIT_ARTIST).map(esc).join(', ');
+
+    const tickets = (e.offers || []).map(o =>
+      `<a href="${esc(o.url)}" target="_blank" rel="noopener" class="ticket-pill">${esc(vendorLabel(o.vendor_name))}</a>`
+    );
+    const primaryUrl = e.offers?.[0]?.url || null;
+
+    const flyerBase = fd ? `${FLYER_BASE}${fd}` : null;
+    const flyerImg  = flyerBase
+      ? `<img class="show-flyer-bg" src="${flyerBase}.jpg" data-base="${flyerBase}" data-exts="jpeg,png,webp" onerror="window.__flyerFallback(this)" alt="" loading="lazy" />`
+      : '';
+
+    const plateInner = flyerImg
+      ? `${flyerImg}<div class="show-plate-scrim"><span class="show-plate-title">${title || '(未定)'}</span></div>`
+      : `<span class="show-plate-title">${title || '(未定)'}</span>`;
+    const plateClass = flyerImg ? ' has-flyer' : '';
+    const plate = primaryUrl
+      ? `<a class="show-plate${plateClass}" href="${esc(primaryUrl)}" target="_blank" rel="noopener">${plateInner}</a>`
+      : `<div class="show-plate${plateClass}">${plateInner}</div>`;
+
+    return `
+      <article class="show-card">
+        ${plate}
+        <div class="show-meta">
+          <span class="show-date">${date}</span>
+          <span class="show-venue show-city">${city}</span>
+          ${performers ? `<span class="show-performers">w/ ${performers}</span>` : ''}
+        </div>
+        <div class="show-tickets">
+          ${tickets.length ? tickets.join('') : '<span class="show-tba">準備中</span>'}
+        </div>
+      </article>`;
+  }
+
+  async function load() {
+    const el = document.getElementById('live-list');
+    try {
+      const url = `https://rest.bandsintown.com/artists/${encodeURIComponent(BIT_ARTIST)}/events?app_id=${BIT_APP_ID}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error();
+      const events = await res.json();
+      if (!Array.isArray(events) || !events.length) {
+        el.innerHTML = '<p class="empty">現在ライブの予定はありません。</p>';
+        return;
+      }
+      el.innerHTML = `<div class="show-grid">${events.map(renderEvent).join('')}</div>`;
+    } catch {
+      el.innerHTML = '<p class="error">情報の取得に失敗しました。</p>';
+    }
+  }
+
+  load();
+</script>
+</body>
+</html>
