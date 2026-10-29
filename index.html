@@ -44,45 +44,64 @@
       width: auto;
     }
 
-    /* ── Streaming tabs ── */
-    .stream-bar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 40px;
+    /* ── Streaming section ── */
+    .stream-section {
+      margin-top: 48px;
       margin-bottom: 8px;
-      padding-top: 4px;
     }
-    .stream-label {
+    .stream-question {
+      font-family: 'Anton', 'Noto Sans JP', sans-serif;
+      font-size: clamp(18px, 3.5vw, 24px);
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+    .stream-question span {
+      display: block;
       font-family: 'Roboto Condensed', sans-serif;
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-dim);
-      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    .stream-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
     }
     .stream-tab {
-      font-family: 'Roboto Condensed', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      padding: 7px 16px 8px;
-      border-radius: 3px;
-      box-shadow: 1px 2px 3px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 8px 14px;
+      background: #fff;
+      border: 1px solid var(--paper-line);
       text-decoration: none;
-      transition: transform 0.15s, box-shadow 0.15s;
+      color: var(--black);
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+      box-shadow: 1px 2px 4px rgba(0,0,0,0.07);
     }
     .stream-tab:hover {
-      box-shadow: 2px 4px 8px rgba(0,0,0,0.22);
-      transform: translateY(-1px) rotate(var(--r));
+      transform: translateY(-3px);
+      box-shadow: 2px 6px 14px rgba(0,0,0,0.12);
+      border-color: var(--black);
     }
-    .stream-tab.spotify     { background: #caffbf; color: #0d5c1f; --r: -2deg; transform: rotate(-2deg); }
-    .stream-tab.apple       { background: #ffadad; color: #7a0000; --r:  2deg; transform: rotate(2deg); }
-    .stream-tab.youtube     { background: #ffd6a5; color: #7a3e00; --r: -1.5deg; transform: rotate(-1.5deg); }
+    .stream-tab img {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+    }
+    .stream-tab-name {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
 
     /* ── Main ── */
     main {
@@ -186,25 +205,37 @@
     }
 
     .show-tickets {
-      margin-top: 10px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+      margin-top: 12px;
     }
     .ticket-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.06em;
+      font-size: 13px;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--black);
-      border: 1px solid var(--paper-line);
-      padding: 6px 14px;
+      color: #fff;
+      background: var(--red);
+      padding: 13px 18px;
       text-decoration: none;
-      transition: border-color 0.15s, color 0.15s;
+      transition: background 0.15s, transform 0.1s;
+      width: 100%;
+      margin-bottom: 6px;
+      position: relative;
     }
-    .ticket-pill:hover { border-color: var(--red); color: var(--red); }
-    .show-tba { font-size: 12px; color: #999; }
+    .ticket-pill:active { transform: scale(0.98); }
+    .ticket-pill:hover { background: #c0000a; }
+    .ticket-pill::after { content: "→"; font-size: 14px; }
+    .show-tba {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: #999;
+      padding: 10px 0;
+      display: block;
+    }
 
     /* ── States ── */
     .loading, .empty, .error {
@@ -319,11 +350,25 @@
       <p class="loading">Loading...</p>
     </div>
 
-    <div class="stream-bar">
-      <span class="stream-label">Listen on</span>
-      <a class="stream-tab spotify" href="https://open.spotify.com/artist/0cascybzS2QQL1m3h57tcY" target="_blank" rel="noopener">Spotify</a>
-      <a class="stream-tab apple" href="https://music.apple.com/jp/artist/moritasaki-in-the-pool/1636167632" target="_blank" rel="noopener">Apple Music</a>
-      <a class="stream-tab youtube" href="https://www.youtube.com/@moritasakiinthepool1739" target="_blank" rel="noopener">YouTube</a>
+    <div class="stream-section">
+      <div class="stream-question">
+        <span>Music</span>
+        どこで聴く？
+      </div>
+      <div class="stream-grid">
+        <a class="stream-tab" href="https://open.spotify.com/artist/0cascybzS2QQL1m3h57tcY" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/nino-msip/moritasaki-in-the-pool/main/icons/spotify.svg" alt="Spotify" />
+          <span class="stream-tab-name">Spotify</span>
+        </a>
+        <a class="stream-tab" href="https://music.apple.com/jp/artist/moritasaki-in-the-pool/1636167632" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/nino-msip/moritasaki-in-the-pool/main/icons/applemusic.svg" alt="Apple Music" />
+          <span class="stream-tab-name">Apple Music</span>
+        </a>
+        <a class="stream-tab" href="https://www.youtube.com/@moritasakiinthepool1739" target="_blank" rel="noopener">
+          <img src="https://raw.githubusercontent.com/nino-msip/moritasaki-in-the-pool/main/icons/youtube.svg" alt="YouTube" />
+          <span class="stream-tab-name">YouTube</span>
+        </a>
+      </div>
     </div>
   </main>
 
