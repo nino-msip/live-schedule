@@ -216,53 +216,89 @@
     /* ── Bandsintown CTA ── */
     .bit-cta {
       margin-top: 48px;
-      border: 2px solid var(--black);
-      padding: 24px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
       background: #fff;
+      border: 1px solid var(--paper-line);
+      padding: 32px 24px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      text-align: center;
     }
-    .bit-cta-text {}
-    .bit-cta-text .bit-cta-label {
+    .bit-cta-logo {
       font-family: 'Roboto Condensed', sans-serif;
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-dim);
-      display: block;
-      margin-bottom: 4px;
     }
-    .bit-cta-text .bit-cta-heading {
+    .bit-cta-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--paper-line);
+    }
+    .bit-cta-name {
       font-family: 'Anton', sans-serif;
-      font-size: clamp(18px, 3vw, 24px);
       font-weight: 400;
-      line-height: 1.15;
-      letter-spacing: 0.03em;
+      font-size: clamp(20px, 4vw, 28px);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
     }
-    .bit-cta-text .bit-cta-sub {
-      font-size: 12px;
+    .bit-cta-badges {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .bit-badge {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1.5px solid var(--black);
+      color: var(--black);
+    }
+    .bit-badge.verified {
+      background: var(--black);
+      color: #fff;
+      border-color: var(--black);
+    }
+    .bit-cta-stats {
+      font-family: 'Roboto Condensed', sans-serif;
+      font-size: 13px;
       color: var(--ink-dim);
-      margin-top: 4px;
+      letter-spacing: 0.04em;
     }
+    .bit-cta-stats span { color: var(--black); font-weight: 700; }
     .bit-cta-btn {
+      margin-top: 4px;
       font-family: 'Roboto Condensed', sans-serif;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 12px 24px;
+      padding: 13px 36px;
       background: var(--black);
       color: #fff;
-      white-space: nowrap;
+      border-radius: 24px;
       transition: background 0.15s;
-      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
     .bit-cta-btn:hover { background: var(--red); }
+    .bit-cta-sub {
+      font-size: 11px;
+      color: var(--ink-dim);
+      margin-top: -4px;
+    }
 
     /* ── Footer ── */
     footer {
@@ -293,20 +329,28 @@
       <span class="stream-label">Listen on</span>
       <a class="stream-tab spotify" href="https://open.spotify.com/artist/0cascybzS2QQL1m3h57tcY" target="_blank" rel="noopener">Spotify</a>
       <a class="stream-tab apple" href="https://music.apple.com/jp/artist/moritasaki-in-the-pool/1636167632" target="_blank" rel="noopener">Apple Music</a>
-      <a class="stream-tab youtube" href="https://www.youtube.com/@mosakinthepool" target="_blank" rel="noopener">YouTube</a>
+      <a class="stream-tab youtube" href="https://www.youtube.com/@moritasakiinthepool1739" target="_blank" rel="noopener">YouTube</a>
     </div>
 
     <div id="live-list">
       <p class="loading">Loading...</p>
     </div>
 
-    <div class="bit-cta">
-      <div class="bit-cta-text">
-        <span class="bit-cta-label">Bandsintown</span>
-        <span class="bit-cta-heading">Follow us &amp; never miss a show.</span>
-        <p class="bit-cta-sub">ライブ情報をいち早くゲット。Bandsintownでフォローしよう。</p>
+    <div class="bit-cta" id="bit-cta">
+      <span class="bit-cta-logo">Bandsintown</span>
+      <img class="bit-cta-img" src="https://photos.bandsintown.com/large/26186122.jpeg" alt="MoritaSaki in the pool" />
+      <span class="bit-cta-name">MoritaSaki in the pool</span>
+      <div class="bit-cta-badges">
+        <span class="bit-badge">On Tour</span>
+        <span class="bit-badge verified">✓ Verified</span>
       </div>
-      <a class="bit-cta-btn" href="https://www.bandsintown.com/a/15665430" target="_blank" rel="noopener">Follow on Bandsintown</a>
+      <p class="bit-cta-stats" id="bit-stats">
+        <span>125</span> Followers &nbsp;·&nbsp; <span>4</span> Upcoming Shows
+      </p>
+      <a class="bit-cta-btn" href="https://www.bandsintown.com/a/15665430" target="_blank" rel="noopener">
+        ♡ Follow
+      </a>
+      <p class="bit-cta-sub">Bandsintownでフォローしてライブ情報をいち早くゲット</p>
     </div>
   </main>
 
@@ -423,6 +467,20 @@
   }
 
   load();
+
+  // Bandsintown フォロワー数・公演数をAPIから更新
+  async function loadArtistStats() {
+    try {
+      const res = await fetch(`https://rest.bandsintown.com/artists/${encodeURIComponent(BIT_ARTIST)}?app_id=${BIT_APP_ID}`);
+      if (!res.ok) return;
+      const a = await res.json();
+      const el = document.getElementById('bit-stats');
+      if (el && a.tracker_count != null) {
+        el.innerHTML = `<span>${a.tracker_count.toLocaleString()}</span> Followers &nbsp;·&nbsp; <span>${a.upcoming_event_count}</span> Upcoming Shows`;
+      }
+    } catch {}
+  }
+  loadArtistStats();
 </script>
 </body>
 </html>
